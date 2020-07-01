@@ -1,7 +1,11 @@
-﻿Module Module1
+﻿Imports YFCommonTools
+
+Module Module1
 
     Sub Main()
-        Console.WriteLine("OK")
+        Dim l = Licensing.RetrieveAllMacs()
+        Console.WriteLine(String.Join(", ", l))
+        Console.ReadKey()
     End Sub
 
 End Module
