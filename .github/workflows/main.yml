@@ -24,15 +24,15 @@ jobs:
 
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
-      
-    - name: Restore packages
-      run: nuget restore ConsoleApp1\ConsoleApp1.sln
 
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
 
     - name: Setup VSTest Path
       uses: darenm/Setup-VSTest@v1
+      
+    - name: Restore packages
+      run: nuget restore ConsoleApp1\ConsoleApp1.sln
 
     - name: Build with MSBuild
       run: msbuild  ConsoleApp1\ConsoleApp1.sln -p:Configuration=Release
