@@ -6,9 +6,11 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ test ]
+    branches:
+      - test
   pull_request:
-    branches: [ test ]
+    branches: 
+      - test
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,16 +22,23 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v1
 
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
-      
-    - name: Restore packages
-      run: nuget restore ConsoleApp1\ConsoleApp1.sln
 
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
 
+    - name: Setup VSTest Path
+      uses: darenm/Setup-VSTest@v1
+      
+    - name: Restore packages
+      run: nuget restore ConsoleApp1\ConsoleApp1.sln
+
     - name: Build with MSBuild
       run: msbuild  ConsoleApp1\ConsoleApp1.sln -p:Configuration=Release
+      
+    - name: VSTest
+      run: vstest.console.exe ConsoleApp1\ConsoleAppTest\bin\Release\ConsoleAppTest.dll
+
